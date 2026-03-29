@@ -5,19 +5,22 @@ import Todo from "../models/todo.model.js";
 export const createTodo = async(req,res)=>{
     try {
         const {title,description} = req.body;
+        // Validation
         if (!title || title.trim()===""){
             return res.status(500).json({
-                message : "Title si required",
+                message : "Title is required",
                 succes : false
             })
         }
 
-        const todo = new Todo.create({
+        const todo = await Todo.create({
             title,
             description
         })
         return res.status(201).json({
-            
+            todo,
+            message : "Todo created successfully",
+            success : true
         })
         
     } catch (error) {
@@ -28,3 +31,4 @@ export const createTodo = async(req,res)=>{
         })
     }
 }
+
